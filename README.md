@@ -72,6 +72,18 @@ curl -X POST http://localhost:8082/channels \
 | `/channels/{id}` | DELETE | Delete channel |
 | `/logs` | GET | Recent webhook logs |
 
+### 在线体验
+
+```bash
+# 发送测试 webhook
+curl -X POST https://hook.indiekit.ai/hook/test \
+  -H "Content-Type: application/json" \
+  -d '{"event": "test", "message": "Hello from curl!"}'
+
+# 查看最近的 webhook 日志
+curl https://hook.indiekit.ai/logs?limit=5
+```
+
 ## Smart Formatting
 
 自动识别并美化常见 webhook 格式：
