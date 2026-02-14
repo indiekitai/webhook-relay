@@ -1,5 +1,8 @@
 # 📨 Webhook Relay
 
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 Receive webhooks from any service, forward to Telegram.
 
 接收任何服务的 webhook，转发到 Telegram。GitHub、Stripe、自定义服务都支持。
