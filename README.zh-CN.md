@@ -5,39 +5,37 @@
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Receive webhooks from any service, forward to Telegram.
+接收任何服务的 Webhook，转发到 Telegram。GitHub、Stripe、自定义服务都支持。
 
-接收任何服务的 webhook，转发到 Telegram。GitHub、Stripe、自定义服务都支持。
+## 功能
 
-## Features
-
-- 🔗 多 channel 支持，每个 channel 独立 URL
+- 🔗 多 Channel 支持，每个 Channel 独立 URL
 - 🤖 自动识别 GitHub/Stripe 等常见格式
 - 🔐 可选签名验证（GitHub 风格）
 - 📝 Webhook 日志记录
 - ⚡ 零配置快速启动
 
-## Quick Start
+## 快速开始
 
 ```bash
 cd /root/source/side-projects/webhook-relay
 
-# Install
+# 安装依赖
 pip install fastapi uvicorn httpx python-dotenv
 
-# Configure
+# 配置
 cp .env.example .env
-# Edit .env: add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID
+# 编辑 .env：添加 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID
 
-# Run
+# 运行
 uvicorn src.main:app --port 8082
 ```
 
-## Usage
+## 使用
 
-### 1. Default Channel
+### 1. 默认 Channel
 
-直接发送到 `/hook/default`:
+直接发送到 `/hook/default`：
 
 ```bash
 curl -X POST http://localhost:8082/hook/default \
@@ -45,50 +43,47 @@ curl -X POST http://localhost:8082/hook/default \
   -d '{"event": "test", "message": "Hello!"}'
 ```
 
-### 2. Create Custom Channel
+### 2. 创建自定义 Channel
 
 ```bash
-# Create channel
 curl -X POST http://localhost:8082/channels \
   -H "Content-Type: application/json" \
   -d '{"name": "GitHub Repo", "secret": "my-webhook-secret"}'
-
-# Response: {"id": "abc123", "url": "/hook/abc123", ...}
 ```
 
-### 3. GitHub Webhook Setup
+### 3. GitHub Webhook 配置
 
-1. Go to repo Settings → Webhooks
-2. Payload URL: `https://your-domain.com/hook/{channel_id}`
-3. Content type: `application/json`
-4. Secret: (same as channel secret)
-5. Events: Choose what to monitor
+1. 进入仓库 Settings → Webhooks
+2. Payload URL：`https://your-domain.com/hook/{channel_id}`
+3. Content type：`application/json`
+4. Secret：与 Channel secret 相同
+5. Events：选择要监控的事件
 
 ## API
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/hook/{channel}` | POST | Receive webhook |
-| `/channels` | GET | List channels |
-| `/channels` | POST | Create channel |
-| `/channels/{id}` | DELETE | Delete channel |
-| `/logs` | GET | Recent webhook logs |
+| 端点 | 方法 | 描述 |
+|------|------|------|
+| `/hook/{channel}` | POST | 接收 Webhook |
+| `/channels` | GET | 列出 Channel |
+| `/channels` | POST | 创建 Channel |
+| `/channels/{id}` | DELETE | 删除 Channel |
+| `/logs` | GET | 最近的 Webhook 日志 |
 
 ### 在线体验
 
 ```bash
-# 发送测试 webhook
+# 发送测试 Webhook
 curl -X POST https://hook.indiekit.ai/hook/test \
   -H "Content-Type: application/json" \
   -d '{"event": "test", "message": "Hello from curl!"}'
 
-# 查看最近的 webhook 日志
+# 查看最近的 Webhook 日志
 curl https://hook.indiekit.ai/logs?limit=5
 ```
 
-## Smart Formatting
+## 智能格式化
 
-自动识别并美化常见 webhook 格式：
+自动识别并美化常见 Webhook 格式：
 
 **GitHub Push:**
 ```
@@ -110,13 +105,13 @@ Amount: 99.00 USD
 Status: succeeded
 ```
 
-## Data Storage
+## 数据存储
 
 ```
 data/
-├── channels.json     # Channel configuration
+├── channels.json     # Channel 配置
 └── logs/
-    └── 2026-02-13.jsonl  # Daily webhook logs
+    └── 2026-02-13.jsonl  # 每日 Webhook 日志
 ```
 
 ## License
